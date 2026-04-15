@@ -19,11 +19,11 @@ jobs:
       - name: Build Image
         run: docker build -t webapi-image ./WebAPI
 
-      - name: Run Containers (QA)
+       - name: Run Containers (QA)
         env:
-         SA_PASSWORD_QA: ${{ secrets.SA_PASSWORD_QA }}
-         JWT_KEY: ${{ secrets.JWT_KEY }}
-       run: docker compose -f WebAPI/docker-compose.yml up -d
+          SA_PASSWORD_QA: ${{ secrets.SA_PASSWORD_QA }}
+          JWT_KEY: ${{ secrets.JWT_KEY }}
+        run: docker compose -f WebAPI/docker-compose.yml up -d
 
       - name: Show Containers
         run: docker ps
