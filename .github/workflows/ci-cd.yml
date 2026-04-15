@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Image
-        run: docker build -t webapi-image .
+        run: docker build -t webapi-image ./WebAPI
 
       - name: Run Containers (QA)
         run: |
