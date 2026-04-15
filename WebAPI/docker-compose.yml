@@ -1,22 +1,15 @@
 version: "3.9"
 
 services:
-
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: ${SA_PASSWORD_QA:?SA_PASSWORD_QA is required} #force failure early
+      SA_PASSWORD: ${SA_PASSWORD_QA}
     ports:
       - "1433:1433"
     networks:
       - webapi-network-compose
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
-      interval: 10s
-      retries: 10
-      start_period: 20s
 
   webapi:
     build: .
@@ -26,15 +19,52 @@ services:
       JWT_KEY: ${JWT_KEY}
       ConnectionStrings__DefaultConnection: Server=sqlserver;Database=WEBAPI;User Id=sa;Password=${SA_PASSWORD_QA};
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      - sqlserver
     networks:
       - webapi-network-compose
-    restart: unless-stopped
 
 networks:
   webapi-network-compose:
-    driver: bridge
+
+
+
+# version: "3.9"
+
+# services:
+
+#   sqlserver:
+#     image: mcr.microsoft.com/mssql/server:2022-latest
+#     environment:
+#       ACCEPT_EULA: "Y"
+#       SA_PASSWORD: ${SA_PASSWORD_QA:?SA_PASSWORD_QA is required} #force failure early
+#     ports:
+#       - "1433:1433"
+#     networks:
+#       - webapi-network-compose
+#     restart: unless-stopped
+#     healthcheck:
+#       test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+#       interval: 10s
+#       retries: 10
+#       start_period: 20s
+
+#   webapi:
+#     build: .
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       JWT_KEY: ${JWT_KEY}
+#       ConnectionStrings__DefaultConnection: Server=sqlserver;Database=WEBAPI;User Id=sa;Password=${SA_PASSWORD_QA};
+#     depends_on:
+#       sqlserver:
+#         condition: service_healthy
+#     networks:
+#       - webapi-network-compose
+#     restart: unless-stopped
+
+# networks:
+#   webapi-network-compose:
+#     driver: bridge
 
 
 
