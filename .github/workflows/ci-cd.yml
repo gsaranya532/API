@@ -1,0 +1,29 @@
+name: WebAPI CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Image
+        run: docker build -t webapi-image .
+
+      - name: Run Containers (QA)
+        run: |
+          SA_PASSWORD=${{ secrets.SA_PASSWORD_QA }} \
+          JWT_KEY=${{ secrets.JWT_KEY }} \
+          docker compose up -d
+
+      - name: Show Containers
+        run: docker ps
