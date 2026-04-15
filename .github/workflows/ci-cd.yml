@@ -19,6 +19,7 @@ jobs:
           SA_PASSWORD_QA: ${{ secrets.SA_PASSWORD_QA }}
           JWT_KEY: ${{ secrets.JWT_KEY }}
         run: |
+         docker compose -f WebAPI/docker-compose.yml down -v
          export SA_PASSWORD_QA=$SA_PASSWORD_QA
          export JWT_KEY=$JWT_KEY
          docker compose -f WebAPI/docker-compose.yml up -d
