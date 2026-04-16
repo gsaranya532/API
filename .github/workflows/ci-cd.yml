@@ -6,19 +6,31 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-test-push:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout source code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Docker
+      # 2. Setup Docker build system
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Image
-        run: docker build -t webapi-image ./WebAPI
+      # 3. Login to Docker Hub (CD ENABLED)
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
+      # 4. Build Docker Image
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./WebAPI
+
+      # 5. Push Docker Image to Docker Hub (CD step 1)
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+
+      # 6. Run QA environment (optional validation inside GitHub runner)
       - name: Run Containers (QA)
         run: |
           docker compose -f WebAPI/docker-compose.yml down -v
@@ -27,8 +39,14 @@ jobs:
           JWT_KEY=${{ secrets.JWT_KEY }} \
           docker compose -f WebAPI/docker-compose.yml up -d
 
+      # 7. Wait for SQL Server startup
       - name: Wait for SQL Server
         run: sleep 30
 
-      - name: Show Running Containers
+      # 8. Show running containers
+      - name: Show Containers
         run: docker ps
+
+      # 9. (Optional) Health check
+      - name: API Health Check
+        run: curl http://localhost:5000/health || echo "Health check skipped/failing"
