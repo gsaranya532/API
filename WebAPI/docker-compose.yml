@@ -12,6 +12,7 @@ services:
       - webapi-network-compose
 
   webapi:
+    container_name: webapi-container
     build: .
     ports:
       - "5000:5000"
