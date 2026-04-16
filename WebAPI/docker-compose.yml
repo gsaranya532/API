@@ -17,6 +17,7 @@ services:
       - "5000:5000"
     environment:
       JWT_KEY: ${JWT_KEY}
+      ASPNETCORE_URLS: http://+:5000
       ConnectionStrings__DefaultConnection: Server=sqlserver;Database=WEBAPI;User Id=sa;Password=${SA_PASSWORD_QA};
     depends_on:
       - sqlserver
