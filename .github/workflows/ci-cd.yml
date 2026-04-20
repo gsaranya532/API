@@ -46,9 +46,9 @@ jobs:
       # 5. Push Docker Image to Docker Hub (CD step 1)
       - name: Push Docker Image
         #run: docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
-         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/api:${{ env.ENV }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+        run: |
+         docker push ${{ secrets.DOCKER_USERNAME }}/api:${{ env.ENV }}
+         docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
      # 7. Run Tests ( CI STEP)
       - name: Run Tests
