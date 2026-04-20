@@ -8,38 +8,33 @@ using System;
 using WebAPI.Services;
 
 
-
+//Creates the application
+//loads configuration(appsettings.json, env variables, Docker env, etc.)
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger setup - Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-// DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Repositories
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<Service>();
-
-//retry
+// EF core and retry policy
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions =>
+        sql =>
         {
-            sqlOptions.EnableRetryOnFailure(
+            sql.EnableRetryOnFailure(
                 maxRetryCount: 5,
                 maxRetryDelay: TimeSpan.FromSeconds(10),
                 errorNumbersToAdd: null);
         }));
-// CORS
+// Repositories Dependency Injection 
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<Service>();
+
+// CORS - Allows frontend apps to call your API
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -76,11 +71,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 //to covert plain tesxt password in to hash in database using api
-using var scope = app.Services.CreateScope();
-var userService = scope.ServiceProvider.GetRequiredService<Service>();
-await userService.HashExistingPasswordsAsync(); // one-time run
+//using var scope = app.Services.CreateScope();
+//var userService = scope.ServiceProvider.GetRequiredService<Service>();
+//await userService.HashExistingPasswordsAsync(); // one-time run
 
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
 
+    //// DB migration
+    //var db = services.GetRequiredService<AppDbContext>();
+    //db.Database.Migrate();
+
+    // one-time password hashing
+//    var userService = services.GetRequiredService<Service>();
+//    await userService.HashExistingPasswordsAsync();
+//}
 //// Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
@@ -95,7 +101,19 @@ app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
+    var db = services.GetRequiredService<AppDbContext>();
+
+    // Apply migrations (EF Core handles retries via EnableRetryOnFailure)
+    db.Database.Migrate();
+
+    // Seed / post-processing
+    var userService = services.GetRequiredService<Service>();
+    await userService.HashExistingPasswordsAsync();
+}
 app.Run();
 
 

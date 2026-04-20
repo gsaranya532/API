@@ -1,7 +1,40 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\saranya\\GITAPI\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\docker-compose.prod.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\docker-compose.prod.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\docker-compose.dev.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\docker-compose.dev.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\data\\dbcontextdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\data\\dbcontextdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|e:\\saranya\\gitapi\\webapi\\wait-for-sqlserver.sh||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9E1828A9-8659-48BB-9FDF-0AA98CA67D3D}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\wait-for-sqlserver.sh||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +42,112 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "docker-compose.prod.yml",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\docker-compose.prod.yml",
+              "RelativeDocumentMoniker": "WebAPI\\docker-compose.prod.yml",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\docker-compose.prod.yml*",
+              "RelativeToolTip": "WebAPI\\docker-compose.prod.yml*",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAiwCQAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-04-20T11:03:50.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DbContextdata.cs",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\Data\\DbContextdata.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Data\\DbContextdata.cs",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\Data\\DbContextdata.cs",
+              "RelativeToolTip": "WebAPI\\Data\\DbContextdata.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-20T09:58:36.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "WebAPI\\appsettings.Development.json",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\appsettings.Development.json",
+              "RelativeToolTip": "WebAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-17T11:47:49.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "WebAPI\\appsettings.json",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\appsettings.json",
+              "RelativeToolTip": "WebAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAACAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-17T10:08:23.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "wait-for-sqlserver.sh",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\wait-for-sqlserver.sh",
+              "RelativeDocumentMoniker": "WebAPI\\wait-for-sqlserver.sh",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\wait-for-sqlserver.sh",
+              "RelativeToolTip": "WebAPI\\wait-for-sqlserver.sh",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-16T11:32:08.518Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\Dockerfile",
+              "RelativeDocumentMoniker": "WebAPI\\Dockerfile",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\Dockerfile",
+              "RelativeToolTip": "WebAPI\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-16T11:31:59.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "docker-compose.dev.yml",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\docker-compose.dev.yml",
+              "RelativeDocumentMoniker": "WebAPI\\docker-compose.dev.yml",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\docker-compose.dev.yml",
+              "RelativeToolTip": "WebAPI\\docker-compose.dev.yml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-04-15T11:52:40.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\saranya\\GITAPI\\WebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Program.cs",
+              "ToolTip": "E:\\saranya\\GITAPI\\WebAPI\\Program.cs",
+              "RelativeToolTip": "WebAPI\\Program.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAiwHgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T10:29:31.926Z",
+              "EditorCaption": ""
             }
           ]
         }

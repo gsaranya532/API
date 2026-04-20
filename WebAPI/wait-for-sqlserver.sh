@@ -1,13 +1,14 @@
+#!/bin/bash
 set -e
 
-echo "Waiting for SQL Server to be ready..."
+echo "Waiting for SQL Server..."
 
-# Keep trying until SQL Server responds
-until /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P "$SA_PASSWORD" -Q "SELECT 1" > /dev/null 2>&1
-do
-  echo "SQL Server not ready, sleeping 5s..."
+# retry until SQL is ready
+until /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P "$SA_PASSWORD_QA" -Q "SELECT 1"; do
+  echo "SQL Server is unavailable - retrying..."
   sleep 5
 done
 
-echo "SQL Server is ready. Starting WebAPI..."
-dotnet WebAPI.dll
+echo "SQL Server is up - starting API"
+
+exec dotnet WebAPI.dll

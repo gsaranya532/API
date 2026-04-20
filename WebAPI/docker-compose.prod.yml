@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-prod
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD_QA}
+    networks:
+      - webapi-network
+    restart: always
+
+    volumes:
+      - sql_data_prod:/var/opt/mssql
+      - sql_backups:/var/opt/mssql/backups
+
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${SA_PASSWORD}\" -Q 'SELECT 1' -C"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  webapi:
+    build: .
+    container_name: webapi-prod
+    ports:
+      - "80:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      JWT_KEY: ${JWT_KEY}
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=WEBAPI_PROD;User Id=sa;Password=${SA_PASSWORD_QA};TrustServerCertificate=True;
+
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+    networks:
+      - webapi-network
+    restart: always
+
+networks:
+  webapi-network:
+
+volumes:
+  sql_data_prod:
+  sql_backups:

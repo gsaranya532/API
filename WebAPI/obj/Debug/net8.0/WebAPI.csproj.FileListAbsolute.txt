@@ -415,10 +415,10 @@ E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.build.json
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.development.json
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\WebAPI.csproj.Up2Date
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\WebAPI.dll
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\refint\WebAPI.dll
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\WebAPI.pdb
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\WebAPI.genruntimeconfig.cache
 E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\ref\WebAPI.dll
+E:\saranya\GITAPI\WebAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

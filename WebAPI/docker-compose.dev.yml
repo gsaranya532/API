@@ -1,0 +1,49 @@
+﻿version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD_QA}
+    ports:
+      - "1433:1433"
+    networks:
+      - webapi-network-compose
+    restart: unless-stopped
+    volumes:
+      - sql_data:/var/opt/mssql
+    # ✅ Wait until SQL Server is actually ready
+    healthcheck:
+      # Note the '18' in the path and the '-C' flag
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${SA_PASSWORD}\" -Q 'SELECT 1' -C"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      
+  webapi:
+    container_name: webapi-container
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      JWT_KEY: ${JWT_KEY}
+      ASPNETCORE_URLS: http://+:5000
+
+      # ✅ Proper ASP.NET Core connection string injection
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=WEBAPI;User Id=sa;Password=${SA_PASSWORD_QA};TrustServerCertificate=True;
+
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+    networks:
+      - webapi-network-compose
+    restart: unless-stopped
+
+networks:
+  webapi-network-compose:
+volumes:
+  sql_data:  

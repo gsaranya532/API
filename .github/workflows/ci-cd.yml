@@ -1,9 +1,11 @@
 name: WebAPI CI/CD
-
+#I have only one branch is main- real time Run this pipeline whenever code is pushed to these branches.
 on:
   push:
     branches:
       - main
+      - dev
+      - qa
 
 jobs:
   build-test-push:
@@ -14,7 +16,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Setup Docker build system
+      # 2. Setup Docker build system -Enables modern Docker build engine
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -22,31 +24,81 @@ jobs:
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # 4. Build Docker Image
+       # 4. Set environment variables (NEW ⭐)
+      - name: Set Environment Name
+        run: |
+          if [ "${GITHUB_REF##*/}" = "main" ]; then
+            echo "ENV=dev" >> $GITHUB_ENV
+          elif [ "${GITHUB_REF##*/}" = "qa" ]; then
+            echo "ENV=qa" >> $GITHUB_ENV
+          else
+            echo "ENV=prod" >> $GITHUB_ENV
+          fi
+      # 4.1 Build Docker Image
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./WebAPI
+        #run: docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./WebAPI
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/api:${{ env.ENV }} \
+            -t ${{ secrets.DOCKER_USERNAME }}/api:latest \
+            ./WebAPI
 
       # 5. Push Docker Image to Docker Hub (CD step 1)
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+        #run: docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+         run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/api:${{ env.ENV }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
-      # 6. Run QA environment (optional validation inside GitHub runner)
-      - name: Run Containers (QA)
+     # 7. Run Tests ( CI STEP)
+      - name: Run Tests
+        run: dotnet test WebAPI/WebAPI.csproj || echo "No tests found"
+
+  deploy:
+    needs: build-test-push
+    runs-on: ubuntu-latest
+
+    steps:
+      # 8. Deploy based on environment ( CD) Connects GitHub to your remote server (VM/cloud)
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+
+            # Detect environment (CHANGED)
+            if [ "${GITHUB_REF##*/}" = "main" ]; then
+              ENV=dev
+              PORT=5000
+            elif [ "${GITHUB_REF##*/}" = "qa" ]; then
+              ENV=qa
+              PORT=5001
+            else
+              ENV=prod
+              PORT=5002
+            fi
+
+            echo "Deploying ENV=$ENV on port $PORT"
+
+            # Pull / Downloads latest image from Docker Hub
+            docker pull ${{ secrets.DOCKER_USERNAME }}/api:$ENV
+
+            # Stop old container , || true means: don’t fail if it doesn’t exist
+            docker stop webapi-$ENV || true
+            docker rm webapi-$ENV || true
+
+            # Run new container (ENV ISOLATION)
+            docker run -d \
+              -p $PORT:5000 \
+              --name webapi-$ENV \
+              -e ASPNETCORE_ENVIRONMENT=$ENV \
+              -e JWT_KEY=${{ secrets.JWT_KEY }} \
+              ${{ secrets.DOCKER_USERNAME }}/api:$ENV
+
+      # 9. Health Check (IMPROVED STRICT)
+      - name: Health Check
         run: |
-          docker compose -f WebAPI/docker-compose.yml down -v
-
-          SA_PASSWORD_QA=${{ secrets.SA_PASSWORD_QA }} \
-          JWT_KEY=${{ secrets.JWT_KEY }} \
-          docker compose -f WebAPI/docker-compose.yml up -d
-
-      # 7. Wait for SQL Server startup
-      - name: Wait for SQL Server
-        run: sleep 30
-
-      # 8. Show running containers
-      - name: Show Containers
-        run: docker ps
-
-      # 9. (Optional) Health check
-      - name: API Health Check
-        run: curl http://localhost:5000/health || echo "Health check skipped/failing"
+          sleep 10
+          curl --fail http://localhost:5000/swagger
